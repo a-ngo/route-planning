@@ -1,0 +1,15 @@
+image:
+  - Visual Studio 2015
+  - Visual Studio 2017
+
+version: "{branch}-{build}"
+
+build_script:
+  - ps: if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017") { .\scripts\nuget_build.ps1 }
+
+test_script:
+  - ps: if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2015") { .\tests\autotest-appveyor.ps1 9 10 11 12 14 }
+  - ps: if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017") { .\tests\autotest-appveyor.ps1 15 }
+
+artifacts:
+  - path: .\scripts\*.nupkg
